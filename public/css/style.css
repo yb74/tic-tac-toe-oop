@@ -1,0 +1,153 @@
+body {
+    text-align: center;
+ }
+
+ /*board and score boxes*/
+ .board-and-score-boxes {
+     display: flex; 
+     justify-content: center; 
+     align-content: center;
+ }
+
+ /*board*/
+ .board {
+     border: 1px solid black; 
+     height: 500px; 
+     width: 500px; 
+     text-align: center;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+ }
+
+ /*box style*/
+ td {
+     border: 1px solid black;
+ }
+
+ /*players' stat box*/
+ .p1-stats-box {
+     background-color: blue;
+     padding: 10px;
+     margin-right: auto;
+     color: white;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+ }
+
+ .p2-stats-box {
+     background-color: red;
+     padding: 10px;
+     margin-left: auto;
+     color: white;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+ }
+
+ /*Cross and circle style*/
+ .cross {
+     background-image: url('../assets/cross.png'); background-repeat: no-repeat; background-position: center;
+ }
+
+ .circle {
+     background-image: url('../assets/circle.png'); background-repeat: no-repeat; background-position: center;
+ }
+
+ .player-turn-box {
+     display: flex;
+     justify-content: center;
+     background-color: purple;
+     padding: 10px;
+     color: white;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     margin-top: 1em;
+ }
+
+ .player-turn-text {
+     font-size: 1.5em;
+ }
+
+ .player-name-turn-text {
+     font-weight: 700;
+     color: gold;
+ }
+
+ .player-turn-cross {
+     display: none;
+     margin: 1em 0 1em 0;
+     padding-left: 1em;
+     height:50px; 
+     width:50px
+ }
+
+ .player-turn-circle {
+     margin: 1em 0 1em 0;
+     padding-left: 1em;
+     height:50px; 
+     width:50px
+ }
+
+ /*Gameover modal*/
+ .modal {
+     display: none;
+     background-color: rgba(0, 0, 0, 0.7);
+     width: 100%;
+     height: 100%;
+     position: fixed;
+     top: 0;
+     left: 0;
+     right: 0;
+     z-index: 1;
+ }
+
+ .modal-content {
+     height: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .player-modal-gameover-text {
+     font-size: 4.5em;
+ }
+
+ .player-modal-name-gameover-text {
+     font-weight: 700;
+     color: gold;
+ }
+
+ .modal-buttons-style {
+     padding: 10px;
+     font-size: 1.5em;
+     margin: 0 5px 0 5px;
+     cursor: pointer;
+     background-color: gold;
+ }
+
+ .modal-text-and-buttons {
+     background-color: white;
+     padding: 20px;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+ }
+
+ /*Gameover box and content*/
+ .player-gameover-box {
+     /* display: flex; */
+     display: none;
+     justify-content: center;
+     background-color: purple;
+     padding: 10px;
+     color: white;
+     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     margin-top: 1em;
+ }
+
+ .player-gameover-text {
+     font-size: 1.5em;
+ }
+
+ .player-name-gameover-text {
+     font-weight: 700;
+     color: gold;
+ }
+
+ .player-gameover-turn-text {
+     font-weight: 700;
+     color: gold;
+ }
