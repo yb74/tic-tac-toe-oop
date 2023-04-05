@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="public/css/style.css">
+  <title>TicTacToe</title>
+</head>
+<body>
+<!--############################## START MENU #############################-->    
+    <div id="start-menu-screen" class="start-menu-screen">
+        <h1 class="menu-title">Main Menu</h1>
+        <div class="players-name-input-container">
+            <div id="p1-type-name" class="p1-type-name">
+                <p>What's your name Player 1 ?</p>
+                <input onkeyup="onChangeHandler()" type="text" name="p1-inputName" id="p1-inputName" class="p1-inputName">
+            </div>
+            <div id="p2-type-name" class="p2-type-name">
+                <p>What's your name Player 2 ?</p>
+                <input onkeyup="onChangeHandler()" type="text" name="p2-inputName" id="p2-inputName" class="p2-inputName">
+            </div>
+            <button id="start-game-btn" class="start-game-btn" disabled>Start Game</button>
+        </div>
+    </div>
+
+<!--############################## BOARD SCREEN #############################--> 
+    <div id="board-screen" class="board-screen">
+        <h1>TIC TAC TOE</h1>
+
+        <div class="board-and-score-boxes">
+            <div class="p1-stats-box">
+                <h2 id="p1-name-stats-box"></h2>
+                <img src="public/assets/circle.png" alt="circle">
+                <p>Won games : <span id="p1-won-games" class="p1-won-games">0</span></p>
+                <p>Lost games : <span id="p1-lost-games" class="p1-lost-games">0</span></p>
+            </div>
+        
+            <table class="board">
+                <tr id="row1">
+                    <td data-box-index="1" id="box-1a" class="boxes"></td>
+                    <td data-box-index="2" id="box-1b" class="boxes"></td>
+                    <td data-box-index="3" id="box-1c" class="boxes"></td>
+                </tr>
+                <tr id="row2">
+                    <td data-box-index="4" id="box-2a" class="boxes"></td>
+                    <td data-box-index="5" id="box-2b" class="boxes"></td>
+                    <td data-box-index="6" id="box-2c" class="boxes"></td>
+                </tr>
+                <tr id="row3">
+                    <td data-box-index="7" id="box-3a" class="boxes"></td>
+                    <td data-box-index="8" id="box-3b" class="boxes"></td>
+                    <td data-box-index="9" id="box-3c" class="boxes"></td>
+                </tr>
+            </table>
+
+            
+        
+            <div class="p2-stats-box">
+                <h2 id="p2-name-stats-box"></h2>
+                <img src="public/assets/cross.png" alt="cross" class="stat-image">
+                <p>Won games : <span id="p2-won-games" class="p2-won-games">0</span></p>
+                <p>Lost games : <span id="p2-lost-games" class="p2-lost-games">0</span></p>
+            </div>
+        </div>
+        <div class="player-turn-box" id="player-turn-box">
+            <p class="player-turn-text" id="player-turn-text">It's <span id="player-name-turn-text" class="player-name-turn-text"></span> turn</p>
+            <img src='public/assets/circle.png' alt='circle' class="player-turn-circle" id="player-turn-circle">
+            <img src='public/assets/cross.png' alt='circle' class="player-turn-cross" id="player-turn-cross">
+        </div>
+        <div class="player-gameover-box" id="player-gameover-box">
+            <p class="player-gameover-text" id="player-gameover-text">The winner is <span id="player-name-gameover-text" class="player-name-gameover-text"></span> !!! </p>
+        </div>
+
+        <div id="modal" class="modal">
+            <div id="modal-content" class="modal-content">
+                <div class="modal-text-and-buttons">
+                    <p class="player-modal-gameover-text" id="player-modal-gameover-text">The winner is <span id="player-modal-name-gameover-text" class="player-modal-name-gameover-text"></span> !!! </p>
+                    <button id='modal-button-playAgain' class="modal-buttons-style">Play again</button> <button id="modal-button-reset-score" class="modal-buttons-style">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--############################## BOTTOM BUTTONS #############################--> 
+    <div id="bottom-buttons" class="bottom-buttons">
+        <button class="back-to-menu-btn" id="back-to-menu-btn">Back to the menu</button>
+        <button id="button-reset-score" class="button-reset-score">Reset</button>
+    </div>    
+    
+    <script src="public/js/Player/Player.js"></script>
+    <script src="public/js/index.js"></script>
+    <script src="public/js/form.js"></script>
+</body>
+</html>

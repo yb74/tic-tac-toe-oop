@@ -4,16 +4,41 @@ class TicTacToe {
         this.gameover = false;
         this.reset = false;
 
+        this.lines = []
+        this.columns = []
+        this.backwardDiagonal = []
+        this.forwardDiagonal = []
+
+        document.getElementById("start-game-btn").addEventListener("click", this.startGame);
+        // document.getElementById("back-to-menu-btn").addEventListener("click", this.backToMenu);
+        document.getElementById("p1-inputName").addEventListener("blur", (e) => {localStorage.setItem('p1_name', e.target.value);});
+        document.getElementById("p2-inputName").addEventListener("blur", (e) => {localStorage.setItem('p2_name', e.target.value);});
+
+        // setTimeout(() => {console.log("P1 name = " + localStorage.getItem('p1_name'))}, 10000);
+        // setTimeout(() => {console.log("P2 name = " + localStorage.getItem('p2_name'))}, 10000);
+        //console.log("P2 name = " + localStorage.getItem('p2_name'));
+
         // players creation
-        this.player1 = new Player("Younes", "circle");
-        this.player2 = new Player("Ali", "cross");
+        // setTimeout(() => {this.player1 = new Player(localStorage.getItem('p1_name'), "circle")}, 10000);
+        // setTimeout(() => {this.player2 = new Player(localStorage.getItem('p2_name'), "cross")}, 10000);
+        // this.player2 = new Player(this.p1_name_input, "cross");
 
-        console.log(`Player 1 : name = ${this.player1.playerName}, number of victory = ${this.player1.victory}`);
-        console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`);
+        // setTimeout(() => {console.log(`Player 1 : name = ${this.player1.playerName}, number of victory = ${this.player1.victory}`)}, 11000);
+        // setTimeout(() => {console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`)}, 11000);
+        // console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`);
 
-        document.getElementById("player-name-turn-text").textContent = this.player1.playerName;
-        document.getElementById("p1-name-stats-box").textContent = this.player1.playerName;
-        document.getElementById("p2-name-stats-box").textContent = this.player2.playerName;
+        setTimeout(() => {
+            // players creation
+            this.player1 = new Player(localStorage.getItem('p1_name'), "circle");
+            this.player2 = new Player(localStorage.getItem('p2_name'), "cross");
+
+            console.log(`Player 1 : name = ${this.player1.playerName}, number of victory = ${this.player1.victory}`);
+            console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`);
+
+            document.getElementById("player-name-turn-text").textContent = this.player1.playerName;
+            document.getElementById("p1-name-stats-box").textContent = this.player1.playerName;
+            document.getElementById("p2-name-stats-box").textContent = this.player2.playerName;
+        }, 10000);
         
         // modal
         this.modalElt = document.getElementById("modal");
@@ -38,6 +63,19 @@ class TicTacToe {
         this.diagonale1 = ["box-1a", "box-2b", "box-3c"];
         this.diagonale2 = ["box-1c", "box-2b", "box-3a"];
 
+        this.boxes = [
+            ["box-1a", "box-1b", "box-1c"],
+            ["box-2a", "box-2b", "box-2c"],
+            ["box-3a", "box-3b", "box-3c"]
+        ]
+
+        this.columnLength = this.boxes[0].length
+        this.arrayColumn = (arr, n) => arr.map(x => x[n]);
+        this.arrayDiagonal = (arr, x, y) => arr.map(item => item[x][y]);
+
+        // console.log(this.boxes[0]);
+        console.log(this.arrayColumn(this.boxes, 0));
+
         // boxes
         this.box1a = document.getElementById("box-1a");
         this.box1b = document.getElementById("box-1b");
@@ -58,7 +96,52 @@ class TicTacToe {
         document.querySelectorAll('.boxes').forEach(box => box.addEventListener('click', this.clickBox));
 
         document.getElementById("modal-button-playAgain").addEventListener("click", this.restart);
-        document.getElementById("modal-button-resetScore").addEventListener("click", this.resetScore);
+        document.getElementById("modal-button-reset-score").addEventListener("click", this.resetScore);
+
+        // Bottom buttons
+        document.getElementById("button-reset-score").addEventListener("click", this.resetScore);
+        document.getElementById("back-to-menu-btn").addEventListener("click", (() => {window.location.reload()}));
+    }
+
+    getLines = () => {
+        for (let i=0; i<this.boxes.length; i++) {
+            this.lines.push(this.boxes[i])
+        }
+        return this.lines
+    }
+      
+    getColumns = () => {
+        for (let i=0; i<this.boxes.length; i++) {
+            const column = []
+            for (let j=0; j<this.boxes.length; j++) {
+            column.push(this.boxes[j][i])
+            }
+            this.columns.push(column)
+        }
+        return this.columns
+    }
+      
+    getBackwardDiagonal = () => {
+        for (let i=0; i<this.boxes.length; i++) {
+            for (let j=0; j<this.boxes.length; j++) {
+            i === j ? this.backwardDiagonal.push(this.boxes[i][j]) : null
+            }
+        }
+        return this.backwardDiagonal
+    }
+      
+    getForwardDiagonal = () => {
+        for (let i=0; i<this.boxes.length; i++) {
+            for (let j=0; j<this.boxes.length; j++) {
+                (i + j === this.boxes.length -1) ? this.forwardDiagonal.push(this.boxes[i][j]) : null
+            }
+        }
+        return this.forwardDiagonal
+    }
+
+    startGame = () => {
+        document.getElementById("start-menu-screen").style.display = "none";
+        document.getElementById("board-screen").style.display = "block";
     }
 
     // function reset score
@@ -146,14 +229,14 @@ class TicTacToe {
                 let checker = (arr, target) => target.every(v => arr.includes(v));
                 
                 if (
-                    checker(this.player2.symboleAcc, this.line1) ||
-                    checker(this.player2.symboleAcc, this.line2) ||
-                    checker(this.player2.symboleAcc, this.line3) ||
-                    checker(this.player2.symboleAcc, this.column1) ||
-                    checker(this.player2.symboleAcc, this.column2) ||
-                    checker(this.player2.symboleAcc, this.column3) ||
-                    checker(this.player2.symboleAcc, this.diagonale1) ||
-                    checker(this.player2.symboleAcc, this.diagonale2)
+                    checker(this.player2.symboleAcc, this.getLines()[0]) ||
+                    checker(this.player2.symboleAcc, this.getLines()[1]) ||
+                    checker(this.player2.symboleAcc, this.getLines()[2]) ||
+                    checker(this.player2.symboleAcc, this.getColumns()[0]) ||
+                    checker(this.player2.symboleAcc, this.getColumns()[1]) ||
+                    checker(this.player2.symboleAcc, this.getColumns()[2]) ||
+                    checker(this.player2.symboleAcc, this.getForwardDiagonal()) ||
+                    checker(this.player2.symboleAcc, this.getBackwardDiagonal())
                 ) {
                     this.gameover = true;
                     // manage score/stats
@@ -192,14 +275,14 @@ class TicTacToe {
                 let checkerP1 = (arrP1, targetP1) => targetP1.every(vP1 => arrP1.includes(vP1));
                 
                 if (
-                    checkerP1(this.player1.symboleAcc, this.line1) ||
-                    checkerP1(this.player1.symboleAcc, this.line2) ||
-                    checkerP1(this.player1.symboleAcc, this.line3) ||
-                    checkerP1(this.player1.symboleAcc, this.column1) ||
-                    checkerP1(this.player1.symboleAcc, this.column2) ||
-                    checkerP1(this.player1.symboleAcc, this.column3) ||
-                    checkerP1(this.player1.symboleAcc, this.diagonale1) ||
-                    checkerP1(this.player1.symboleAcc, this.diagonale2)
+                    checkerP1(this.player1.symboleAcc, this.getLines()[0]) ||
+                    checkerP1(this.player1.symboleAcc,this.getLines()[1]) ||
+                    checkerP1(this.player1.symboleAcc, this.getLines()[2]) ||
+                    checkerP1(this.player1.symboleAcc, this.getColumns()[0]) ||
+                    checkerP1(this.player1.symboleAcc, this.getColumns()[1]) ||
+                    checkerP1(this.player1.symboleAcc, this.getColumns()[2]) ||
+                    checkerP1(this.player1.symboleAcc, this.getForwardDiagonal()) ||
+                    checkerP1(this.player1.symboleAcc, this.getBackwardDiagonal())
                 ) {
                     this.gameover = true;
                     // manage score

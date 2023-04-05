@@ -1,5 +1,48 @@
 body {
     text-align: center;
+    margin: 0;
+ }
+
+ /*Start menu screen*/
+ .start-menu-screen {
+    background-color: aqua;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+ }
+
+ .menu-title {
+    font-size: 4em;
+    color: white;
+ }
+
+ .players-name-input-container {
+    position: relative;
+    top: 11%;
+    background-color: lime;
+    padding: 15px;
+    color: white;
+    font-size: 1.3em;
+ }
+
+.start-game-btn {
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.start-game-btn:hover {
+    cursor: pointer;
+}
+
+.p2-type-name {
+    margin-top: 35px;
+}
+
+ /*Board screen*/
+ .board-screen {
+     display: none;
  }
 
  /*board and score boxes*/
@@ -150,4 +193,17 @@ body {
  .player-gameover-turn-text {
      font-weight: 700;
      color: gold;
+ }
+
+ /* Bottom buttons */
+ .bottom-buttons {
+     margin: 2em;
+ }
+
+ .back-to-menu-btn, .button-reset-score {
+    padding: 10px;
+    font-size: 1.5em;
+    margin: 0 5px 0 5px;
+    cursor: pointer;
+    background-color: greenyellow;
  }
