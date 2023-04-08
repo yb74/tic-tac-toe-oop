@@ -18,6 +18,14 @@
                 <p>What's your name Player 2 ?</p>
                 <input onkeyup="onChangeHandler()" type="text" name="p2-inputName" id="p2-inputName" class="p2-inputName">
             </div>
+            <div id="board-size-selection" class="board-size-selection">
+                <p>Which size of the board do you want ?</p>
+                <select name="board-size-selector" id="board-size-selector">
+                    <option value="3">Size 3x3</option>
+                    <option value="4">Size 4x4</option>
+                    <option value="5">Size 5x5</option>
+                </select>
+            </div>
             <button id="start-game-btn" class="start-game-btn" disabled>Start Game</button>
         </div>
     </div>
@@ -34,22 +42,8 @@
                 <p>Lost games : <span id="p1-lost-games" class="p1-lost-games">0</span></p>
             </div>
         
-            <table class="board">
-                <tr id="row1">
-                    <td data-box-index="1" id="box-1a" class="boxes"></td>
-                    <td data-box-index="2" id="box-1b" class="boxes"></td>
-                    <td data-box-index="3" id="box-1c" class="boxes"></td>
-                </tr>
-                <tr id="row2">
-                    <td data-box-index="4" id="box-2a" class="boxes"></td>
-                    <td data-box-index="5" id="box-2b" class="boxes"></td>
-                    <td data-box-index="6" id="box-2c" class="boxes"></td>
-                </tr>
-                <tr id="row3">
-                    <td data-box-index="7" id="box-3a" class="boxes"></td>
-                    <td data-box-index="8" id="box-3b" class="boxes"></td>
-                    <td data-box-index="9" id="box-3c" class="boxes"></td>
-                </tr>
+            <table class="board" id="board">
+            <!-- Generated Dynamically-->
             </table>
 
             

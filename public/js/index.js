@@ -9,23 +9,61 @@ class TicTacToe {
         this.backwardDiagonal = []
         this.forwardDiagonal = []
 
+        this.boxesIds = [] // 1d array of boxes Ids (to be transformed to 2d array to set the boxes in proper order
+
         document.getElementById("start-game-btn").addEventListener("click", this.startGame);
         // document.getElementById("back-to-menu-btn").addEventListener("click", this.backToMenu);
         document.getElementById("p1-inputName").addEventListener("blur", (e) => {localStorage.setItem('p1_name', e.target.value);});
         document.getElementById("p2-inputName").addEventListener("blur", (e) => {localStorage.setItem('p2_name', e.target.value);});
+        document.getElementById("board-size-selector").addEventListener("blur", (e) => {localStorage.setItem('board_size', e.target.value); console.log("Board size target = %o", e.target.value)});
 
-        // setTimeout(() => {console.log("P1 name = " + localStorage.getItem('p1_name'))}, 10000);
-        // setTimeout(() => {console.log("P2 name = " + localStorage.getItem('p2_name'))}, 10000);
-        //console.log("P2 name = " + localStorage.getItem('p2_name'));
+        // Game board creation
+        const tableElt = document.getElementById("board")
+        // let boardSizeSelectorVal = document.getElementById("board-size-selector").value
+        let boardSizeSelectorVal = localStorage.getItem('board_size')
+        console.log("Board size local storage = %o", boardSizeSelectorVal)
+        for (let i=1; i<=boardSizeSelectorVal; i++) {
+            // Table row creation
+            let tableRow = document.createElement('tr');
+            tableRow.id=`row${i}`
+            // adding rows to table
+            tableElt.appendChild(tableRow)
 
-        // players creation
-        // setTimeout(() => {this.player1 = new Player(localStorage.getItem('p1_name'), "circle")}, 10000);
-        // setTimeout(() => {this.player2 = new Player(localStorage.getItem('p2_name'), "cross")}, 10000);
-        // this.player2 = new Player(this.p1_name_input, "cross");
+            const rowElt = document.getElementById(`row${i}`)
+            for (let j=1; j<=boardSizeSelectorVal; j++) {
+                // Table division creation
+                let tableDivision = document.createElement('td');
+                tableDivision.setAttribute("class", "boxes")
+                // adding division to table
+                rowElt.appendChild(tableDivision)
+            }
+        }
+        // setting id and custom attributes for each table divison <td> of the board
+        const tableDivisionElts = document.getElementsByTagName("td")
+        for (let k=0; k<boardSizeSelectorVal * boardSizeSelectorVal; k++) {
+            tableDivisionElts[k].setAttribute(`data-box-index`, k+1)
+            tableDivisionElts[k].id = `box${k+1}`
 
-        // setTimeout(() => {console.log(`Player 1 : name = ${this.player1.playerName}, number of victory = ${this.player1.victory}`)}, 11000);
-        // setTimeout(() => {console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`)}, 11000);
-        // console.log(`Player 2 : name = ${this.player2.playerName}, number of victory = ${this.player2.victory}`);
+            // Stocking boxes Ids in an 1d array
+            this.boxesIds.push(tableDivisionElts[k].id)
+        }
+        // Splitting the 1d array into a 2D array of boxes Ids to display the boxes in proper order
+        const arr = this.boxesIds
+        const splitArray = (arr, rows) => {
+            const itemsPerRow = Math.ceil(arr.length / rows);
+            return arr.reduce((acc, val, ind) => {
+                const currentRow = Math.floor(ind / itemsPerRow);
+                if(!acc[currentRow]){
+                    acc[currentRow] = [val];
+                }else{
+                    acc[currentRow].push(val);
+                }
+                return acc;
+            }, []);
+        };
+
+        this.boxes = splitArray(arr, Math.sqrt(arr.length))
+        console.log("Transforme to 2D array = %o",this.boxes);
 
         setTimeout(() => {
             // players creation
@@ -51,43 +89,7 @@ class TicTacToe {
         this.p2_victoryElt = document.getElementById("p2-won-games");
         this.p2_DefeatElt = document.getElementById("p2-lost-games");
 
-        // Stocking columns, lines and diagonals' ID in an array
-        this.line1 = ["box-1a", "box-1b", "box-1c"];
-        this.line2 = ["box-2a", "box-2b", "box-2c"];
-        this.line3 = ["box-3a", "box-3b", "box-3c"];
-
-        this.column1 = ["box-1a", "box-2a", "box-3a"];
-        this.column2 = ["box-1b", "box-2b", "box-3b"];
-        this.column3 = ["box-1c", "box-2c", "box-3c"];
-
-        this.diagonale1 = ["box-1a", "box-2b", "box-3c"];
-        this.diagonale2 = ["box-1c", "box-2b", "box-3a"];
-
-        this.boxes = [
-            ["box-1a", "box-1b", "box-1c"],
-            ["box-2a", "box-2b", "box-2c"],
-            ["box-3a", "box-3b", "box-3c"]
-        ]
-
-        this.columnLength = this.boxes[0].length
-        this.arrayColumn = (arr, n) => arr.map(x => x[n]);
-        this.arrayDiagonal = (arr, x, y) => arr.map(item => item[x][y]);
-
-        // console.log(this.boxes[0]);
-        console.log(this.arrayColumn(this.boxes, 0));
-
-        // boxes
-        this.box1a = document.getElementById("box-1a");
-        this.box1b = document.getElementById("box-1b");
-        this.box1c = document.getElementById("box-1c");
-
-        this.box2a = document.getElementById("box-2a");
-        this.box2b = document.getElementById("box-2b");
-        this.box2c = document.getElementById("box-2c");
-
-        this.box3a = document.getElementById("box-3a");
-        this.box3b = document.getElementById("box-3b");
-        this.box3c = document.getElementById("box-3c");
+        console.log("Boxes Ids to form the bord array = %o", this.boxesIds)
 
         // player turn text
         this.playerNameText = document.getElementById("player-name-turn-text");
@@ -101,6 +103,8 @@ class TicTacToe {
         // Bottom buttons
         document.getElementById("button-reset-score").addEventListener("click", this.resetScore);
         document.getElementById("back-to-menu-btn").addEventListener("click", (() => {window.location.reload()}));
+
+        console.log("Diagonal back = %o", this.getBackwardDiagonal())
     }
 
     getLines = () => {
@@ -114,7 +118,7 @@ class TicTacToe {
         for (let i=0; i<this.boxes.length; i++) {
             const column = []
             for (let j=0; j<this.boxes.length; j++) {
-            column.push(this.boxes[j][i])
+                column.push(this.boxes[j][i])
             }
             this.columns.push(column)
         }
@@ -124,7 +128,7 @@ class TicTacToe {
     getBackwardDiagonal = () => {
         for (let i=0; i<this.boxes.length; i++) {
             for (let j=0; j<this.boxes.length; j++) {
-            i === j ? this.backwardDiagonal.push(this.boxes[i][j]) : null
+                i === j ? this.backwardDiagonal.push(this.boxes[i][j]) : null
             }
         }
         return this.backwardDiagonal
@@ -189,27 +193,10 @@ class TicTacToe {
         // };
     }
 
-    // click handling
-    handleBoxClick = (clickedBoxEvent) => {
-        /*
-        We will save the clicked html element in a variable for easier further use
-        */    
-        const clickedBoxElt = clickedBoxEvent.target;
-        /*
-        Here we will grab the 'data-box-index' attribute from the clicked box to identify where that box is in our grid. 
-        Please note that the getAttribute will return a string value. Since we need an actual number we will parse it to an 
-        integer(number)
-        */
-       
-        const clickedBoxIndex = parseInt(
-            clickedBoxElt.getAttribute('data-box-index')
-        );
-
-        console.log(clickedBoxIndex);
-    }
-
     clickBox = (clickedBoxEvent) => {
         const elt = clickedBoxEvent.target;
+
+        let checker = (arr, target) => target.every(v => arr.includes(v));
 
         // condition below prevnent to replace a cross by a circle and vice-versa
         if (!elt.classList.contains("circle") && !elt.classList.contains("cross") && !this.gameover) {
@@ -224,41 +211,40 @@ class TicTacToe {
                 // manage victory player 2
                 this.player2.symboleAcc.push(elt.id);
 
-                console.log(this.player2.symboleAcc);
+                console.log("Player2 symbols acc = %o", this.player2.symboleAcc);
 
-                let checker = (arr, target) => target.every(v => arr.includes(v));
-                
-                if (
-                    checker(this.player2.symboleAcc, this.getLines()[0]) ||
-                    checker(this.player2.symboleAcc, this.getLines()[1]) ||
-                    checker(this.player2.symboleAcc, this.getLines()[2]) ||
-                    checker(this.player2.symboleAcc, this.getColumns()[0]) ||
-                    checker(this.player2.symboleAcc, this.getColumns()[1]) ||
-                    checker(this.player2.symboleAcc, this.getColumns()[2]) ||
-                    checker(this.player2.symboleAcc, this.getForwardDiagonal()) ||
-                    checker(this.player2.symboleAcc, this.getBackwardDiagonal())
-                ) {
-                    this.gameover = true;
-                    // manage score/stats
-                    this.player2.victory += 1;
-                    this.p2_victoryElt.textContent = this.player2.victory;
+                console.log("Get lines = %o", this.getLines()[3]);
 
-                    this.player1.defeat += 1;
-                    this.p1_DefeatElt.textContent = this.player1.defeat;
-                    // alert("player 2 won !!");
-                    this.modalElt.style.display = "block";
-                    document.getElementById("player-modal-gameover-text").innerHTML = 'The winner is <span id="player-modal-name-gameover-text" class="player-modal-name-gameover-text"></span> !!!';
-                    document.getElementById("player-modal-name-gameover-text").textContent = this.player2.playerName;
+                for (let i=0; i<localStorage.getItem('board_size'); i++) {
+                    console.log("Get lines = %o", this.getLines()[i])
+                    if (
+                        checker(this.player2.symboleAcc, this.getLines()[i]) ||
+                        checker(this.player2.symboleAcc, this.getColumns()[i]) ||
+                        checker(this.player2.symboleAcc, this.getForwardDiagonal()) ||
+                        checker(this.player2.symboleAcc, this.getBackwardDiagonal())
+                    ) {
+                        this.gameover = true;
+                        // manage score/stats
+                        this.player2.victory += 1;
+                        this.p2_victoryElt.textContent = this.player2.victory;
 
-                    document.getElementById("player-name-gameover-text").textContent = this.player2.playerName;
-                    
-                    document.getElementById("player-turn-box").style.display = "none";
-                    document.getElementById("player-gameover-box").style.display = "flex";
-                } else {
-                    console.log("player 2 hasn't won yet !!");
-                    if (this.count === 9) {
+                        this.player1.defeat += 1;
+                        this.p1_DefeatElt.textContent = this.player1.defeat;
+                        // alert("player 2 won !!");
                         this.modalElt.style.display = "block";
-                        document.getElementById("player-modal-gameover-text").innerHTML = "It's a draw !!!";
+                        document.getElementById("player-modal-gameover-text").innerHTML = 'The winner is <span id="player-modal-name-gameover-text" class="player-modal-name-gameover-text"></span> !!!';
+                        document.getElementById("player-modal-name-gameover-text").textContent = this.player2.playerName;
+
+                        document.getElementById("player-name-gameover-text").textContent = this.player2.playerName;
+
+                        document.getElementById("player-turn-box").style.display = "none";
+                        document.getElementById("player-gameover-box").style.display = "flex";
+                    } else {
+                        console.log("player 2 hasn't won yet !!");
+                        if (this.count === localStorage.getItem('board_size')*localStorage.getItem('board_size')) {
+                            this.modalElt.style.display = "block";
+                            document.getElementById("player-modal-gameover-text").innerHTML = "It's a draw !!!";
+                        }
                     }
                 }
             } else { // player 1 (impaire)
@@ -270,53 +256,49 @@ class TicTacToe {
                 // manage victory player 1
                 this.player1.symboleAcc.push(elt.id);
 
-                console.log(this.player1.symboleAcc);
+                console.log("Player1 symbols acc = %o", this.player1.symboleAcc);
 
-                let checkerP1 = (arrP1, targetP1) => targetP1.every(vP1 => arrP1.includes(vP1));
-                
-                if (
-                    checkerP1(this.player1.symboleAcc, this.getLines()[0]) ||
-                    checkerP1(this.player1.symboleAcc,this.getLines()[1]) ||
-                    checkerP1(this.player1.symboleAcc, this.getLines()[2]) ||
-                    checkerP1(this.player1.symboleAcc, this.getColumns()[0]) ||
-                    checkerP1(this.player1.symboleAcc, this.getColumns()[1]) ||
-                    checkerP1(this.player1.symboleAcc, this.getColumns()[2]) ||
-                    checkerP1(this.player1.symboleAcc, this.getForwardDiagonal()) ||
-                    checkerP1(this.player1.symboleAcc, this.getBackwardDiagonal())
-                ) {
-                    this.gameover = true;
-                    // manage score
-                    this.player1.victory += 1;
-                    this.p1_victoryElt.textContent = this.player1.victory;
+                for (let i=0; i<localStorage.getItem('board_size'); i++) {
+                    if (
+                        checker(this.player1.symboleAcc, this.getLines()[i]) ||
+                        checker(this.player1.symboleAcc, this.getColumns()[i]) ||
+                        checker(this.player1.symboleAcc, this.getForwardDiagonal()) ||
+                        checker(this.player1.symboleAcc, this.getBackwardDiagonal())
+                    ) {
+                        this.gameover = true;
+                        // manage score
+                        this.player1.victory += 1;
+                        this.p1_victoryElt.textContent = this.player1.victory;
 
-                    this.player2.defeat += 1;
-                    this.p2_DefeatElt.textContent = this.player2.defeat;
+                        this.player2.defeat += 1;
+                        this.p2_DefeatElt.textContent = this.player2.defeat;
 
-                    this.modalElt.style.display = "block";
-                    document.getElementById("player-modal-gameover-text").innerHTML = 'The winner is <span id="player-modal-name-gameover-text" class="player-modal-name-gameover-text"></span> !!!';
-                    document.getElementById("player-modal-name-gameover-text").textContent = this.player1.playerName;
-
-                    document.getElementById("player-gameover-box").style.display = "flex";
-                    document.getElementById("player-turn-box").style.display = "none";
-                    
-                    document.getElementById("player-name-gameover-text").textContent = this.player1.playerName;
-                    // alert("player 1 won !!");
-                } else {
-                    console.log("player 1 hasn't won yet !!");
-                    if (this.count === 9) {
                         this.modalElt.style.display = "block";
-                        document.getElementById("player-modal-gameover-text").innerHTML = "Nobody won !!!";
+                        document.getElementById("player-modal-gameover-text").innerHTML = 'The winner is <span id="player-modal-name-gameover-text" class="player-modal-name-gameover-text"></span> !!!';
+                        document.getElementById("player-modal-name-gameover-text").textContent = this.player1.playerName;
+
+                        document.getElementById("player-gameover-box").style.display = "flex";
+                        document.getElementById("player-turn-box").style.display = "none";
+
+                        document.getElementById("player-name-gameover-text").textContent = this.player1.playerName;
+                        // alert("player 1 won !!");
+                    } else {
+                        console.log("player 1 hasn't won yet !!");
+                        if (this.count === localStorage.getItem('board_size')*localStorage.getItem('board_size')) {
+                            this.modalElt.style.display = "block";
+                            document.getElementById("player-modal-gameover-text").innerHTML = "Nobody won !!!";
+                        }
                     }
                 }
-            };
-
-            console.log("count : %d", this.count);
-
-            if (this.gameover) {
-                document.getElementById("player-turn-box").style.display ="none";
-                document.getElementById("player-gameover-box").style.display ="flex";
-                this.count = 0;
             }
+        }
+
+        console.log("count : %d", this.count);
+
+        if (this.gameover) {
+            document.getElementById("player-turn-box").style.display ="none";
+            document.getElementById("player-gameover-box").style.display ="flex";
+            this.count = 0;
         }
     }
 }
