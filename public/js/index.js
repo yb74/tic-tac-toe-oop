@@ -225,10 +225,11 @@ class TicTacToe {
                     ) {
                         this.gameover = true;
                         // manage score/stats
-                        this.player2.victory += 1;
+                        // If victory with a diagonal, we divide the sum of the score by the size of the board to prevent the loop to add +1 for each iteration as we check only 1 diagonal at the time
+                        checker(this.player2.symboleAcc, this.getForwardDiagonal()) || checker(this.player2.symboleAcc, this.getBackwardDiagonal()) ? this.player2.victory += 1 / localStorage.getItem('board_size') : this.player2.victory += 1;
                         this.p2_victoryElt.textContent = this.player2.victory;
 
-                        this.player1.defeat += 1;
+                        checker(this.player2.symboleAcc, this.getForwardDiagonal()) || checker(this.player2.symboleAcc, this.getBackwardDiagonal()) ? this.player1.defeat += 1 / localStorage.getItem('board_size') : this.player1.defeat += 1;
                         this.p1_DefeatElt.textContent = this.player1.defeat;
                         // alert("player 2 won !!");
                         this.modalElt.style.display = "block";
@@ -267,10 +268,10 @@ class TicTacToe {
                     ) {
                         this.gameover = true;
                         // manage score
-                        this.player1.victory += 1;
+                        checker(this.player1.symboleAcc, this.getForwardDiagonal()) || checker(this.player1.symboleAcc, this.getBackwardDiagonal()) ? this.player1.victory += 1 / localStorage.getItem('board_size') : this.player1.victory += 1;
                         this.p1_victoryElt.textContent = this.player1.victory;
 
-                        this.player2.defeat += 1;
+                        checker(this.player1.symboleAcc, this.getForwardDiagonal()) || checker(this.player1.symboleAcc, this.getBackwardDiagonal()) ? this.player2.defeat += 1 / localStorage.getItem('board_size') : this.player2.defeat += 1;
                         this.p2_DefeatElt.textContent = this.player2.defeat;
 
                         this.modalElt.style.display = "block";
