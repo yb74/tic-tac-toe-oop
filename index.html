@@ -9,25 +9,27 @@
 <!--############################## START MENU #############################-->    
     <div id="start-menu-screen" class="start-menu-screen">
         <h1 class="menu-title">Main Menu</h1>
-        <div class="players-name-input-container">
-            <div id="p1-type-name" class="p1-type-name">
-                <p>What's your name Player 1 ?</p>
-                <input onkeyup="onChangeHandler()" type="text" name="p1-inputName" id="p1-inputName" class="p1-inputName">
+        <form action="">
+            <div class="players-name-input-container">
+                <div id="p1-type-name" class="p1-type-name">
+                    <p>What's your name Player 1 ?</p>
+                    <input onkeyup="onChangeHandler()" type="text" name="p1-inputName" id="p1-inputName" class="p1-inputName">
+                </div>
+                <div id="p2-type-name" class="p2-type-name">
+                    <p>What's your name Player 2 ?</p>
+                    <input onkeyup="onChangeHandler()" type="text" name="p2-inputName" id="p2-inputName" class="p2-inputName">
+                </div>
+                <div id="board-size-selection" class="board-size-selection">
+                    <p>Which size of the board do you want ?</p>
+                    <select name="board-size-selector" id="board-size-selector">
+                        <option value="3">Size 3x3</option>
+                        <option value="4">Size 4x4</option>
+                        <option value="5">Size 5x5</option>
+                    </select>
+                </div>
+                <input type="submit" id="start-game-btn" class="start-game-btn" disabled value="Start Game">
             </div>
-            <div id="p2-type-name" class="p2-type-name">
-                <p>What's your name Player 2 ?</p>
-                <input onkeyup="onChangeHandler()" type="text" name="p2-inputName" id="p2-inputName" class="p2-inputName">
-            </div>
-            <div id="board-size-selection" class="board-size-selection">
-                <p>Which size of the board do you want ?</p>
-                <select name="board-size-selector" id="board-size-selector">
-                    <option value="3">Size 3x3</option>
-                    <option value="4">Size 4x4</option>
-                    <option value="5">Size 5x5</option>
-                </select>
-            </div>
-            <button id="start-game-btn" class="start-game-btn" disabled>Start Game</button>
-        </div>
+        </form>
     </div>
 
 <!--############################## BOARD SCREEN #############################--> 
