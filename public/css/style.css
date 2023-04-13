@@ -58,7 +58,7 @@ body {
      height: 500px; 
      width: 500px; 
      text-align: center;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
  }
 
  /*box style*/
@@ -72,7 +72,7 @@ body {
      padding: 10px;
      margin-right: auto;
      color: white;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
  }
 
  .p2-stats-box {
@@ -80,16 +80,16 @@ body {
      padding: 10px;
      margin-left: auto;
      color: white;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
  }
 
  /*Cross and circle style*/
  .cross {
-     background-image: url('../assets/cross.png'); background-repeat: no-repeat; background-position: center;
+     background-image: url('../assets/cross.png'); background-repeat: no-repeat; background-position: center; background-size: contain;
  }
 
  .circle {
-     background-image: url('../assets/circle.png'); background-repeat: no-repeat; background-position: center;
+     background-image: url('../assets/circle.png'); background-repeat: no-repeat; background-position: center; background-size: contain;
  }
 
  .player-turn-box {
@@ -98,7 +98,7 @@ body {
      background-color: purple;
      padding: 10px;
      color: white;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
      margin-top: 1em;
  }
 
@@ -166,7 +166,7 @@ body {
  .modal-text-and-buttons {
      background-color: white;
      padding: 20px;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
  }
 
  /*Gameover box and content*/
@@ -177,7 +177,7 @@ body {
      background-color: purple;
      padding: 10px;
      color: white;
-     box-shadow: 4px 4px 4px rgb(0 0 0 / 70%);
+     box-shadow: 4px 4px 4px rgba(0, 0, 0, .7);
      margin-top: 1em;
  }
 
